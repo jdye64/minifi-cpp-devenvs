@@ -7,3 +7,7 @@ The ideal way to use this project is to download a local copy of the Apache MiNi
 ## Running
 
 This project is dependent on Docker being installed on your local machine. The only script that should be directly used in this project is ```./dev.sh``` this script will provide you with a list of options that can be performed on the Docker images contained within this project such as building your local source code against every Operating System that is defined in the Docker images.
+
+## Screenshot of dev.sh
+
+![dev.sh](https://github.com/jdye64/minifi-cpp-devenvs/blob/master/assets/cli_screenshot.png "MiNiFi CPP Developer Environments")

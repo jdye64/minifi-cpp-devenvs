@@ -64,6 +64,7 @@ function validateBuildAgainstAllOperatingSystems {
 
 	# Now lets examine all the files in the $MINIFI_CPP_DEVENV_HOME/compile directory and make sure they are all "PASS" and not "FAIL"
 	ALL_PASS=$true
+	printf "\n\n"
 	for f in $MINIFI_CPP_DEVENV_HOME/compile/*
 	do
 		COMPILE_STATUS="$(cat $f)"
