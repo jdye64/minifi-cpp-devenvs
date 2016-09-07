@@ -45,13 +45,20 @@ CONTAINER_DIR="/minifi"
 function validateBuildAgainstAllOperatingSystems {
 	echo "Validating that the current source code $MINIFI_CPP_DEVENV_HOME builds against all available Docker images"
 
+	# Remove the previous "compile" directory that would contain any previous compilation run statuses
+	rm -rf $MINIFI_CPP_DEVENV_HOME/compile
+	mkdir $MINIFI_CPP_DEVENV_HOME/compile
+
 	# Locate all Operating Systems that the current code should be compiled against.
 	for f in $PROJ_HOME/OS/*/*/DockerImage.txt
 	do
 		echo "File $f"
 		DOCKER_IMAGE="$(cat $f)"
 		echo "Docker Image $DOCKER_IMAGE"
-		docker run -it -v $MINIFI_CPP_DEVENV_HOME:$CONTAINER_DIR $DOCKER_IMAGE make -C /minifi
+		CONTAINER_ID=$(docker run -it -d -v $MINIFI_CPP_DEVENV_HOME:$CONTAINER_DIR $DOCKER_IMAGE)
+		docker cp ./scripts/compileMinifiCPP.sh $CONTAINER_ID:/
+		docker exec -it $CONTAINER_ID /compileMinifiCPP.sh $DOCKER_IMAGE
+		docker kill $CONTAINER_ID
 	done
 }
 

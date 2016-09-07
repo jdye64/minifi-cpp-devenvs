@@ -1,1 +1,1 @@
-jdye64/minifi-devenv:0.0.1-centos-7
+jdye64/minifi-cpp-devenvs:0.0.1-centos-7
