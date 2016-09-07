@@ -6,4 +6,4 @@ The ideal way to use this project is to download a local copy of the Apache MiNi
 
 ## Running
 
-This project is dependent on Docker being installed on your local machine. All of the Docker containers should be started using the corresponding ```DockerRun.sh``` script located in the desired OS folder. For example to run against Ubuntu you would run ```$PROJ_HOME/Ubuntu/DockerRun.sh```.
+This project is dependent on Docker being installed on your local machine. The only script that should be directly used in this project is ```./dev.sh``` this script will provide you with a list of options that can be performed on the Docker images contained within this project such as building your local source code against every Operating System that is defined in the Docker images.

@@ -26,8 +26,10 @@ rain   nrainrainrainrainrainrainr
            ainrainrain
 EOF
 
+printf "\n\n"
 echo "============== Apache MiNiFi CPP Developer Framework =============="
 echo "The Apache NiFi and MiNiFi projects and logos are copyright of the Apache Software Foundation"
+printf "\n\n"
 
 pushd `dirname $0` > /dev/null
 PROJ_HOME=`pwd`
@@ -52,13 +54,24 @@ function validateBuildAgainstAllOperatingSystems {
 	# Locate all Operating Systems that the current code should be compiled against.
 	for f in $PROJ_HOME/OS/*/*/DockerImage.txt
 	do
-		echo "File $f"
 		DOCKER_IMAGE="$(cat $f)"
 		echo "Docker Image $DOCKER_IMAGE"
 		CONTAINER_ID=$(docker run -it -d -v $MINIFI_CPP_DEVENV_HOME:$CONTAINER_DIR $DOCKER_IMAGE)
 		docker cp ./scripts/compileMinifiCPP.sh $CONTAINER_ID:/
 		docker exec -it $CONTAINER_ID /compileMinifiCPP.sh $DOCKER_IMAGE
 		docker kill $CONTAINER_ID
+	done
+
+	# Now lets examine all the files in the $MINIFI_CPP_DEVENV_HOME/compile directory and make sure they are all "PASS" and not "FAIL"
+	ALL_PASS=$true
+	for f in $MINIFI_CPP_DEVENV_HOME/compile/*
+	do
+		COMPILE_STATUS="$(cat $f)"
+		if [ "$COMPILE_STATUS" = "FAIL" ]; then
+			echo "$f - FAIL"
+		else
+			echo "$f - PASS"
+		fi
 	done
 }
 
