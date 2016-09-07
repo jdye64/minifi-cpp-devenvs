@@ -6,7 +6,8 @@ if [ -z "$MINIFI_CPP_DEVENV_HOME" ]; then
     exit 1
 fi
 
+DOCKER_IMAGE="$(cat DockerImage.txt)"
 HOST_DIR="$MINIFI_CPP_DEVENV_HOME"
 CONTAINER_DIR="/minifi"
 
-docker run -it -v $HOST_DIR:$CONTAINER_DIR --security-opt seccomp=unconfined jdye64/minifi-devenv:0.0.1-centos bash
+docker run -it -v $HOST_DIR:$CONTAINER_DIR --security-opt seccomp=unconfined $DOCKER_IMAGE bash
