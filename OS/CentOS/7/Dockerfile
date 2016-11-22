@@ -1,21 +1,22 @@
-FROM centos:7
+FROM centos:7.2.1511
 MAINTAINER Jeremy Dyer <jdye64@gmail.com>
 
-ENV MINIFI_HOME=/nifi-minifi-cpp-rel-minifi-cpp-0.0.1
-ENV MINIFI_VERSION=0.0.1
-ENV MINIFI_SOURCE_URL=https://github.com/apache/nifi-minifi-cpp/archive/rel/minifi-cpp-0.0.1.tar.gz
+# Java & Generic setup
+RUN yum install -y java-1.8.0-openjdk-devel wget unzip net-tools
+RUN echo "export JAVA_HOME=/usr/lib/jvm/java" >> /root/.bashrc
 
-# yum update and then install gcc, g++, and make
-RUN yum update && yum group install -y "Development Tools" \
-	&& yum install -y wget \
-		gdb \
-		boost-devel \
-		libxml2-devel \
-		vim \
-	&& wget $MINIFI_SOURCE_URL \
-	&& tar -xzvf minifi-cpp-0.0.1.tar.gz \
-	&& cd $MINIFI_HOME \
-	&& make
+# maven setup
+ARG MAVEN_URL=https://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+ARG MAVEN_VER=apache-maven-3.3.9
+RUN wget ${MAVEN_URL} -O /maven.tgz && tar -xzvf /maven.tgz && mv ${MAVEN_VER} /maven
 
-# Add the default configuration otherwise starting up will throw a segfault
-ADD ./data/flow.yml $MINIFI_HOME/conf
+# minifi-cpp build
+RUN yum install -y git 
+RUN yum install -y epel-release
+RUN yum groupinstall -y 'Development Tools'
+RUN yum install -y cmake
+RUN yum install -y boost-devel libxml2-devel libuuid-devel leveldb-devel
+CMD export PATH=$PATH:/maven/bin
+
+# Perform the build
+RUN git clone https://github.com/apache/nifi-minifi-cpp; cd nifi-minifi-cpp; mkdir build; cd build; cmake ..; make

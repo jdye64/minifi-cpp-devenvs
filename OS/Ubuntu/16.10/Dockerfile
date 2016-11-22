@@ -12,11 +12,10 @@ RUN apt-get update && apt-get install -y build-essential \
 	libboost-all-dev \
 	libxml2-dev \
 	vim \
-	&& apt-get clean \
-	&& wget $MINIFI_SOURCE_URL \
-	&& tar -xzvf minifi-cpp-0.0.1.tar.gz \
-	&& cd $MINIFI_HOME \
-	&& make
+	uuid-dev \
+	libleveldb-dev \
+	cmake \
+	git
 
-# Add the default configuration otherwise starting up will throw a segfault
-ADD ./data/flow.yml $MINIFI_HOME/conf
+# Perform the build
+RUN git clone https://github.com/apache/nifi-minifi-cpp; cd nifi-minifi-cpp; mkdir build; cd build; cmake ..; make
