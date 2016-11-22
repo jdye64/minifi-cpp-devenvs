@@ -16,6 +16,3 @@ RUN apt-get update && apt-get install -y build-essential \
 	libleveldb-dev \
 	cmake \
 	git
-
-# Perform the build
-RUN git clone https://github.com/apache/nifi-minifi-cpp; cd nifi-minifi-cpp; mkdir build; cd build; cmake ..; make

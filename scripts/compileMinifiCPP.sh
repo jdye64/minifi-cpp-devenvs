@@ -1,6 +1,6 @@
 #!/bin/bash
 FILE_IND_DIR="/minifi/compile"
-cd /minifi && make clean && make
+cd /minifi; rm -rf ./build; mkdir build; cd build; cmake ..; make
 
 IFS=\/ # delimit on _
 set -f # disable the glob part

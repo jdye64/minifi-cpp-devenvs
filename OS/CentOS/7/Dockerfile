@@ -17,6 +17,3 @@ RUN yum groupinstall -y 'Development Tools'
 RUN yum install -y cmake
 RUN yum install -y boost-devel libxml2-devel libuuid-devel leveldb-devel
 CMD export PATH=$PATH:/maven/bin
-
-# Perform the build
-RUN git clone https://github.com/apache/nifi-minifi-cpp; cd nifi-minifi-cpp; mkdir build; cd build; cmake ..; make
