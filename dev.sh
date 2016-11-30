@@ -77,15 +77,27 @@ function validateBuildAgainstAllOperatingSystems {
 }
 
 
+# Starts a Docker container that is already setup to build minifi-cpp and attaches to it
+# with the proper mounts to the local source code so that a developer can code on their host
+# OS and then build the code inside the running docker container.
+function openDevBuildEnvironment() {
+	DOCKER_IMAGE="$(cat $PROJ_HOME/OS/Ubuntu/16.10/DockerImage.txt)"
+	echo "Starting docker development container: $DOCKER_IMAGE"
+	CONTAINER_ID=$(docker run -it -v $MINIFI_CPP_DEVENV_HOME:$CONTAINER_DIR $DOCKER_IMAGE bash)
+}
+
+
 # Loop through the commandline inquiry loop
 while true; do
 	printf "\n"
 	printf "1 - Validate CPP build against all available Docker images\n"
+	printf "2 - Open dev build environment\n"
 	printf "q - quit\n"
 	printf "\n"
 	read -p "Option: " option
 	case $option in
 		[1]* ) validateBuildAgainstAllOperatingSystems;;
+		[2]* ) openDevBuildEnvironment;;
 		[qQ]* ) exit;;
 	esac
 done
