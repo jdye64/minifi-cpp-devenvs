@@ -1,0 +1,29 @@
+version: '2'
+services:
+  minifi.dev:
+    build:
+        context: ./images/minifi
+        dockerfile: Dockerfile
+    image: jdye64/minifi-cpp-int-envs:minifi-168-minifi
+    networks:
+     - dev
+    hostname: minifi
+    domainname: dev
+    links:
+     - nifi.dev
+  nifi.dev:
+    build:
+        context: ./images/nifi
+        dockerfile: Dockerfile
+    image: jdye64/minifi-cpp-int-envs:minifi-168-nifi
+    networks:
+     - dev
+    hostname: nifi
+    domainname: dev
+    ports:
+     - "8080:8080"
+     - "8181:8181"
+     - "9191:9191"
+networks:
+  dev:
+    driver: bridge
