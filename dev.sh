@@ -83,7 +83,7 @@ function validateBuildAgainstAllOperatingSystems {
 function openDevBuildEnvironment() {
 	DOCKER_IMAGE="$(cat $PROJ_HOME/OS/Ubuntu/16.10/DockerImage.txt)"
 	echo "Starting docker development container: $DOCKER_IMAGE"
-	CONTAINER_ID=$(docker run -it -v $MINIFI_CPP_DEVENV_HOME:$CONTAINER_DIR $DOCKER_IMAGE bash)
+	docker run -it -v $MINIFI_CPP_DEVENV_HOME:$CONTAINER_DIR $DOCKER_IMAGE /bin/bash
 }
 
 
