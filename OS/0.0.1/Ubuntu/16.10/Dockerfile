@@ -11,4 +11,5 @@ RUN apt-get update && apt-get install -y build-essential \
 	uuid-dev \
 	libleveldb-dev \
 	cmake \
-	git
+	git \
+	unzip
