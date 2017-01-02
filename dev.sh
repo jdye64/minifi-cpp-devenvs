@@ -81,7 +81,7 @@ function validateBuildAgainstAllOperatingSystems {
 # with the proper mounts to the local source code so that a developer can code on their host
 # OS and then build the code inside the running docker container.
 function openDevBuildEnvironment() {
-	DOCKER_IMAGE="$(cat $PROJ_HOME/OS/Ubuntu/16.10/DockerImage.txt)"
+	DOCKER_IMAGE="$(cat $PROJ_HOME/OS/0.1.0/Ubuntu/16.10/DockerImage.txt)"
 	echo "Starting docker development container: $DOCKER_IMAGE"
 	docker run -it -v $MINIFI_CPP_DEVENV_HOME:$CONTAINER_DIR $DOCKER_IMAGE /bin/bash
 }
