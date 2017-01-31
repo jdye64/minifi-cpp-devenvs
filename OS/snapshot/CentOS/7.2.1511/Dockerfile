@@ -12,3 +12,5 @@ RUN yum install -y boost-devel boost-static libxml2-static libxml2-devel libuuid
 RUN git clone https://github.com/apache/nifi-minifi-cpp.git
 ADD deps/patch.cmake /nifi-minifi-cpp
 RUN cd nifi-minifi-cpp && git apply patch.cmake
+
+RUN cd nifi-minifi-cpp && mkdir build && cd build && cmake .. && make package
